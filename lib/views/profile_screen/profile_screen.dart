@@ -1,6 +1,10 @@
 import 'package:ecom/consts/consts.dart';
 import 'package:ecom/consts/lists.dart';
+import 'package:ecom/controllers/auth_controller.dart';
+import 'package:ecom/controllers/profile_controller.dart';
+import 'package:ecom/views/auth_screen/login_screen.dart';
 import 'package:ecom/views/profile_screen/components/details_cart.dart';
+import 'package:ecom/views/profile_screen/edit_profile_screen.dart';
 import 'package:ecom/widgets_common/bg_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -8,6 +12,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var controller = Get.put(ProfileController());
     return bgWidget(
       child: Scaffold(
         body: SafeArea(
@@ -20,7 +26,7 @@ class ProfileScreen extends StatelessWidget {
                     alignment: Alignment.topRight,
                     child: const Icon(Icons.edit, color: whiteColor)
                 ).onTap(() {
-
+                  Get.to(() => EditProfileScreen());
                 }),
               ),
 
@@ -45,7 +51,10 @@ class ProfileScreen extends StatelessWidget {
                               color: whiteColor,
                             ),
                           ),
-                          onPressed: (){},
+                          onPressed: () async {
+                            await Get.put(AuthController()).signoutMethod(context);
+                            Get.offAll(() => const LoginScreen());
+                          },
                           child: logout.text.fontFamily(semibold).color(whiteColor).make()
                       )
                     ],
