@@ -1,7 +1,7 @@
 const appname = "Shop Station";
 const appversion = "Version 1.0.0";
 const credits = "@Prashant Silpakar";
-const email = "Name";
+const email = "Email";
 const emailHint = "email@gmail.com";
 const password = "Password";
 const passwordHint = "********";
@@ -17,6 +17,8 @@ const loginWith = "Login with";
 const privacyPolicy = "Privacy Policy";
 const termAndCond = "Terms and Condition";
 const alreadyHaveAccount = "Already have and account? ";
+const loggedin = "Logged in successfully";
+const loggedout = "Logged out successfully";
 
 //home strings
 const home = "Home", categories = "Categories", cart = "Cart", account = "Account";
