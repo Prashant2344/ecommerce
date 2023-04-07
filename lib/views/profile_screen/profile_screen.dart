@@ -1,5 +1,7 @@
 import 'package:ecom/consts/consts.dart';
 import 'package:ecom/consts/lists.dart';
+import 'package:ecom/controllers/auth_controller.dart';
+import 'package:ecom/views/auth_screen/login_screen.dart';
 import 'package:ecom/views/profile_screen/components/details_cart.dart';
 import 'package:ecom/widgets_common/bg_widget.dart';
 
@@ -45,7 +47,10 @@ class ProfileScreen extends StatelessWidget {
                               color: whiteColor,
                             ),
                           ),
-                          onPressed: (){},
+                          onPressed: () async {
+                            await Get.put(AuthController()).signoutMethod(context);
+                            Get.offAll(() => const LoginScreen());
+                          },
                           child: logout.text.fontFamily(semibold).color(whiteColor).make()
                       )
                     ],

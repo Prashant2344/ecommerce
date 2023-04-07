@@ -1,5 +1,6 @@
 import 'package:ecom/consts/consts.dart';
 import 'package:ecom/consts/lists.dart';
+import 'package:ecom/controllers/auth_controller.dart';
 import 'package:ecom/views/auth_screen/signup_screen.dart';
 import 'package:ecom/views/home_screen/home.dart';
 import 'package:ecom/widgets_common/applogo_widget.dart';
@@ -12,6 +13,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(AuthController());
+
     return bgWidget(
         child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -26,16 +29,26 @@ class LoginScreen extends StatelessWidget {
                 
                 Column(
                   children: [
-                    customTextField(title:email, hint: emailHint),
-                    customTextField(title:password, hint: passwordHint),
+                    customTextField(title:email, hint: emailHint,controller: controller.emailController),
+                    customTextField(title:password, hint: passwordHint,controller: controller.passwordController),
                     Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(onPressed: () {}, child: forgetPass.text.make()),
                     ),
                     5.heightBox,
 
-                    customButton(color: redColor,title: login, textColor: whiteColor, onPress: () {
-                      Get.to(() => const Home());
+                    controller.isLoading.value ? const CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation(redColor),
+                    ) : customButton(color: redColor,title: login, textColor: whiteColor, onPress: () async {
+                      controller.isLoading(true);
+                      await controller.loginMethod(context: context).then((value) {
+                        if(value){
+                          VxToast.show(context, msg: loggedin);
+                          Get.offAll(() => const Home());
+                        }else{
+                          controller.isLoading(false);
+                        }
+                      });
                     })
                         .box
                         .width(context.screenWidth - 50)
